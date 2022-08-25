@@ -7,22 +7,65 @@ class HomePageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text('Title'),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: Icon(
+          Icons.add,
+        ),
+      ),
+      appBar: PreferredSize(
+        preferredSize: Size(
+          double.infinity,
+          60,
+        ),
+        child: Container(
+          color: Colors.black,
+        ),
       ),
       body: _buildBody(),
     );
   }
 
   Widget _buildBody() {
-    return Column(
-      children: const [
-        MyTextWidget(),
-        MyTextWidget(),
-        MyTextWidget(),
-        MyTextWidget(),
-        MyTextWidget(),
+    List<String> names = [
+      'asd',
+      'asddd',
+      '232',
+      'ewq',
+      'asdewqdd',
+    ];
+
+    return GridView(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        crossAxisSpacing: 4.0,
+        mainAxisSpacing: 4.0,
+      ),
+      children: [
+        Card(
+          child: IconButton(
+            icon: Icon(Icons.abc),
+            onPressed: () {},
+          ),
+        ),
+        Card(
+          child: IconButton(
+            icon: Icon(Icons.abc),
+            onPressed: () {},
+          ),
+        ),
+        Card(
+          child: IconButton(
+            icon: Icon(Icons.abc),
+            onPressed: () {},
+          ),
+        ),
+        Card(
+          child: IconButton(
+            icon: Icon(Icons.abc),
+            onPressed: () {},
+          ),
+        ),
       ],
     );
   }
