@@ -9,7 +9,7 @@ class HomePageWidget extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('Title'),
+        title: const Text('HOME MASTER'),
       ),
       body: _buildBody(),
     );
