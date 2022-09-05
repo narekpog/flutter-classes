@@ -1,4 +1,4 @@
-# first_project
+# indigo
 
 A new Flutter project.
 

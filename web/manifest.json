@@ -1,6 +1,6 @@
 {
-    "name": "first_project",
-    "short_name": "first_project",
+    "name": "indigo",
+    "short_name": "indigo",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

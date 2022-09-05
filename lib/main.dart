@@ -1,6 +1,4 @@
-import 'package:first_project/base/routes.dart';
-import 'package:first_project/pages/home_page.dart';
-import 'package:first_project/pages/settings_page.dart';
+import 'package:indigo/base/routes.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -15,7 +13,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.indigo,
       ),
       onGenerateRoute: AppRoutes.onGenerateRoute,
     );

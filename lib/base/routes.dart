@@ -1,12 +1,10 @@
-import 'package:first_project/pages/home_page.dart';
-import 'package:first_project/pages/products_page.dart';
-import 'package:first_project/pages/settings_page.dart';
+import 'package:indigo/pages/auth/login/login_page.dart';
+import 'package:indigo/pages/homepage/home_page.dart';
 import 'package:flutter/material.dart';
 
 class AppRoutes {
-  static const home = '/';
-  static const settings = '/settings';
-  static const products = '/products';
+  static const login = '/';
+  static const homepage = '/homepage';
 
   static MaterialPageRoute onGenerateRoute(RouteSettings settings) {
     PageArguments? pageArguments;
@@ -15,11 +13,8 @@ class AppRoutes {
     }
 
     var routes = <String, WidgetBuilder>{
-      AppRoutes.home: (context) => const HomePageWidget(),
-      AppRoutes.settings: (context) => SettingPage(
-            id: pageArguments?.data?['id'],
-          ),
-      AppRoutes.products: (context) => const ProductsPage(),
+      AppRoutes.login: (context) => const LoginPage(),
+      AppRoutes.homepage: (context) => const HomePageWidget(),
     };
 
     WidgetBuilder builder = routes[settings.name] ?? routes.values.first;
