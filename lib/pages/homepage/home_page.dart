@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:indigo/api/indigo_api.dart';
 import 'package:indigo/models/product_model.dart';
 
 class HomePageWidget extends StatefulWidget {
@@ -12,7 +13,6 @@ class HomePageWidget extends StatefulWidget {
 class _HomePageWidgetState extends State<HomePageWidget> {
   @override
   void initState() {
-    _getProductsData();
     super.initState();
   }
 
@@ -30,27 +30,25 @@ class _HomePageWidgetState extends State<HomePageWidget> {
   }
 
   Widget _buildBody(BuildContext context) {
-    return Text('Home');
-  }
+    return FutureBuilder(
+      future: IndigoAPI().products.getProductsData(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          final products = snapshot.data as List<ProductModel>;
 
-  void _getProductsData() async {
-    final dioClient = Dio();
-    dioClient.options = BaseOptions(
-        baseUrl: 'https://my-json-server.typicode.com/narekpog/my-json/');
-
-    final result = await dioClient.get(
-      'products',
-      queryParameters: {
-        'name': 'Bob',
-        'age': 12,
+          return ListView.separated(
+            itemBuilder: (context, index) {
+              return Text(products[index].productName ?? '');
+            },
+            separatorBuilder: (context, index) => const Divider(),
+            itemCount: products.length,
+          );
+        } else {
+          return const Center(
+            child: Text('No Items'),
+          );
+        }
       },
     );
-
-    if (result.data is List) {
-      var products =
-          result.data.first.map((e) => ProductModel.fromJson(e)).toList();
-
-      print(products);
-    }
   }
 }
