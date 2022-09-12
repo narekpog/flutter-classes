@@ -11,6 +11,8 @@ class HomePageWidget extends StatefulWidget {
 }
 
 class _HomePageWidgetState extends State<HomePageWidget> {
+  final GlobalKey<ScaffoldState> _key = GlobalKey(); //
+
   @override
   void initState() {
     super.initState();
@@ -19,11 +21,62 @@ class _HomePageWidgetState extends State<HomePageWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // drawerEnableOpenDragGesture: false,
+      key: _key,
+      floatingActionButton: Builder(
+        builder: (context) {
+          return FloatingActionButton(
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
+              // _key.currentState!.openDrawer();
+            },
+            child: Icon(Icons.menu),
+          );
+        },
+      ),
       appBar: AppBar(
         title: const Text(
           'Home',
         ),
-        automaticallyImplyLeading: false,
+        // automaticallyImplyLeading: false,
+      ),
+      drawer: Drawer(
+        child: Column(
+          children: [
+            Container(
+              width: double.infinity,
+              color: Colors.indigo,
+              child: const DrawerHeader(
+                child: Text(
+                  'INDIGO',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 30,
+                  ),
+                ),
+              ),
+            ),
+            ListTile(
+              title: Text('Home'),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: Text('Settings'),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            const Spacer(),
+            ListTile(
+              title: Text('Log Out'),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        ),
       ),
       body: _buildBody(context),
     );
