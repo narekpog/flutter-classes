@@ -1,6 +1,8 @@
 import 'package:indigo/pages/auth/login/login_page.dart';
 import 'package:indigo/pages/homepage/home_page.dart';
 import 'package:flutter/material.dart';
+import 'package:indigo/pages/homepage/home_page_provider.dart';
+import 'package:provider/provider.dart';
 
 class AppRoutes {
   static const login = '/';
@@ -14,7 +16,7 @@ class AppRoutes {
 
     var routes = <String, WidgetBuilder>{
       AppRoutes.login: (context) => const LoginPage(),
-      AppRoutes.homepage: (context) => const HomePageWidget(),
+      AppRoutes.homepage: (context) => HomePageWidget(),
     };
 
     WidgetBuilder builder = routes[settings.name] ?? routes.values.first;

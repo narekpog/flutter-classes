@@ -1,104 +1,93 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:indigo/api/indigo_api.dart';
-import 'package:indigo/models/product_model.dart';
+import 'package:indigo/pages/homepage/home_page_provider.dart';
+import 'package:provider/provider.dart';
 
-class HomePageWidget extends StatefulWidget {
-  const HomePageWidget({Key? key}) : super(key: key);
-
-  @override
-  State<HomePageWidget> createState() => _HomePageWidgetState();
-}
-
-class _HomePageWidgetState extends State<HomePageWidget> {
-  final GlobalKey<ScaffoldState> _key = GlobalKey(); //
-
-  @override
-  void initState() {
-    super.initState();
-  }
+class HomePageWidget extends StatelessWidget {
+  final GlobalKey<ScaffoldState> _key = GlobalKey();
+  HomePageWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      // drawerEnableOpenDragGesture: false,
-      key: _key,
-      floatingActionButton: Builder(
-        builder: (context) {
-          return FloatingActionButton(
-            onPressed: () {
-              Scaffold.of(context).openDrawer();
-              // _key.currentState!.openDrawer();
-            },
-            child: Icon(Icons.menu),
-          );
-        },
-      ),
-      appBar: AppBar(
-        title: const Text(
-          'Home',
+    return ChangeNotifierProvider(
+      lazy: false,
+      create: (context) => HomePageProvider(),
+      child: Scaffold(
+        key: _key,
+        floatingActionButton: Builder(
+          builder: (context) {
+            return FloatingActionButton(
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+              child: const Icon(Icons.menu),
+            );
+          },
         ),
-        // automaticallyImplyLeading: false,
-      ),
-      drawer: Drawer(
-        child: Column(
-          children: [
-            Container(
-              width: double.infinity,
-              color: Colors.indigo,
-              child: const DrawerHeader(
-                child: Text(
-                  'INDIGO',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 30,
+        appBar: AppBar(
+          title: const Text(
+            'Home',
+          ),
+          // automaticallyImplyLeading: false,
+        ),
+        drawer: Drawer(
+          child: Column(
+            children: [
+              Container(
+                width: double.infinity,
+                color: Colors.indigo,
+                child: const DrawerHeader(
+                  child: Text(
+                    'INDIGO',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 30,
+                    ),
                   ),
                 ),
               ),
-            ),
-            ListTile(
-              title: Text('Home'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: Text('Settings'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            const Spacer(),
-            ListTile(
-              title: Text('Log Out'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-          ],
+              ListTile(
+                title: Text('Home'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                title: Text('Settings'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+              const Spacer(),
+              ListTile(
+                title: Text('Log Out'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
         ),
+        body: _buildBody(context),
       ),
-      body: _buildBody(context),
     );
   }
 
   Widget _buildBody(BuildContext context) {
-    return FutureBuilder(
-      future: IndigoAPI().products.getProductsData(),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          final products = snapshot.data as List<ProductModel>;
-
-          return ListView.separated(
-            itemBuilder: (context, index) {
-              return Text(products[index].productName ?? '');
-            },
-            separatorBuilder: (context, index) => const Divider(),
-            itemCount: products.length,
+    return Consumer<HomePageProvider>(
+      builder: (context, provider, child) {
+        if (provider.showLoading) {
+          return const Center(
+            child: CircularProgressIndicator(),
           );
         } else {
-          return const Center(
-            child: Text('No Items'),
+          return ListView.builder(
+            itemCount: provider.productsList.length,
+            itemBuilder: ((context, index) => TextButton(
+                  onPressed: () {
+                    provider.onItemPressed(provider.productsList[index]);
+                  },
+                  child: Text(provider.productsList[index].productName ?? ''),
+                )),
           );
         }
       },
