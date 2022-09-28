@@ -136,7 +136,7 @@ class _LoginPageState extends State<LoginPage> {
             return _dialog(
               context,
               title: 'Error',
-              content: 'Username is invalid, OK',
+              content: 'Username is invalid!!!',
             );
           },
         );
